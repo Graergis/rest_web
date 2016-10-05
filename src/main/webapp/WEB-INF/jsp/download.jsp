@@ -21,8 +21,13 @@
         <p><a href="<c:url value='/download/internal' />" class="button24">Скачать файл (внутренний)</a></p>
         <p><a href="<c:url value='/download/external' />" class="button24">Скачать файл (внешний)</a></p>
         <p><a href="<c:url value='/' />" class="button24">На главную</a></p>
-        <input type="file" id="file" style="display: none" />
-		<p><a onclick="openFileDialog('file')" class="button24">Обзор</a></p>
     </div> 
+    <div style=" width:2000px; height:350px; overflow: auto;">
+			<ul>
+				<c:forEach var="listValue" items="${lists}">
+					<H1><span class="uniform-bg">${listValue}</span></H1>
+				</c:forEach>
+			</ul>
+		</div>
 </body>
 </html>

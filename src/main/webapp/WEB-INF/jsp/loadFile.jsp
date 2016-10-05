@@ -13,7 +13,7 @@
 <body>
     <div class="form-container">
         <h1>Welcome to FileDownloader Example</h1>
-        <p><h1>Не удалось загрузить файл</h1></p>
+        <p><h1>Файл загружен</h1></p>
         <p><a href="<c:url value='/' />" class="button24">на главную</a></p>
     </div> 
 </body>

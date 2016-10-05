@@ -19,7 +19,7 @@
     </div> 
     <div id="modal_form" style="display: none; top: 45%; opacity: 0;">
 			<span id="modal_close">X</span>
-			<form enctype="multipart/form-data" action="<c:url value = '/loadFile' />" method="post" id="othdetphotoform">
+			<form enctype="multipart/form-data" action="<c:url value = '/loadFile' />" method="post" id="othdetphotoform" target="hiddenframe">
 				<h3>Данные загрузки</h3>
 					<p>Название документа<br>
 						<input type="text" name="name" value="" size="15">

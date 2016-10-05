@@ -26,8 +26,8 @@ a.button24:hover { background: linear-gradient(#f5ae00, #f59500) #f5ae00; }
 a.button24:active { background: linear-gradient(#f59500, #f5ae00) #f59500; }
 
 #modal_form {
-	width: 300px; 
-	height: 300px; /* Размеры должны быть фиксированы */
+	width: 320px; 
+	height: 350px; /* Размеры должны быть фиксированы */
 	border-radius: 5px;
 	border: 3px #000 solid;
 	background: #fff;
