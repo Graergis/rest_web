@@ -1,32 +1,39 @@
-body { 
+body {
 	margin: 100px 100px 0px 100px;
-	padding:0; min-height:100%; 
+	padding: 0;
+	min-height: 100%;
 	background: #000000 url('oblako2.jpg') fixed top left no-repeat;
-	-o-background-size: 100% 100%;  /* Opera 9.5+ */
-	-webkit-background-size:100% 100%; /* Safari 3+, Chrome */
-	-moz-background-size:100% 100%; /* Firefox 3.6+ */
-	-khtml-background-size:100% 100%; /* Konqueror */
+	-o-background-size: 100% 100%; 
+	-webkit-background-size: 100% 100%; 
+	-moz-background-size: 100% 100%; 
+	-khtml-background-size: 100% 100%; 
 	background-size: 100% 100%;
-}	
+}
 
 a.button24 {
-  display: inline-block;
-  color: white;
-  text-decoration: none;
-  padding: .5em 2em;
-  outline: none;
-  border-width: 2px 0;
-  border-style: solid none;
-  border-color: #FDBE33 #000 #D77206;
-  border-radius: 6px;
-  background: linear-gradient(#F3AE0F, #E38916) #E38916;
-  transition: 0.2s;
-} 
-a.button24:hover { background: linear-gradient(#f5ae00, #f59500) #f5ae00; }
-a.button24:active { background: linear-gradient(#f59500, #f5ae00) #f59500; }
+	display: inline-block;
+	color: white;
+	text-decoration: none;
+	padding: .5em 2em;
+	outline: none;
+	border-width: 2px 0;
+	border-style: solid none;
+	border-color: #FDBE33 #000 #D77206;
+	border-radius: 6px;
+	background: linear-gradient(#F3AE0F, #E38916) #E38916;
+	transition: 0.2s;
+}
+
+a.button24:hover {
+	background: linear-gradient(#f5ae00, #f59500) #f5ae00;
+}
+
+a.button24:active {
+	background: linear-gradient(#f59500, #f5ae00) #f59500;
+}
 
 #modal_form {
-	width: 320px; 
+	width: 320px;
 	height: 350px; /* Размеры должны быть фиксированы */
 	border-radius: 5px;
 	border: 3px #000 solid;
@@ -35,12 +42,13 @@ a.button24:active { background: linear-gradient(#f59500, #f5ae00) #f59500; }
 	top: 45%; /* отступаем сверху 45%, остальные 5% подвинет скрипт */
 	left: 50%; /* половина экрана слева */
 	margin-top: -150px;
-	margin-left: -150px; /* тут вся магия центровки css, отступаем влево и вверх минус половину ширины и высоты соответственно =) */
+	margin-left: -150px;
 	display: none; /* в обычном состоянии окна не должно быть */
 	opacity: 0; /* полностью прозрачно для анимирования */
 	z-index: 5; /* окно должно быть наиболее большем слое */
 	padding: 20px 10px;
 }
+
 #modal_form #modal_close {
 	width: 21px;
 	height: 21px;
@@ -52,13 +60,14 @@ a.button24:active { background: linear-gradient(#f59500, #f5ae00) #f59500; }
 }
 /* Подложка */
 #overlay {
-	z-index: 3; /* подложка должна быть выше слоев элементов сайта, но ниже слоя модального окна */
+	z-index: 3;
+	/* подложка должна быть выше слоев элементов сайта, но ниже слоя модального окна */
 	position: fixed; /* всегда перекрывает весь сайт */
 	background-color: #000; /* черная */
 	opacity: 0.8; /* но немного прозрачна */
-	width: 100%; 
+	width: 100%;
 	height: 100%; /* размером во весь экран */
-	top: 0; 
+	top: 0;
 	left: 0; /* сверху и слева 0, обязательные свойства! */
 	cursor: pointer;
 	display: none; /* в обычном состоянии её нет) */

@@ -3,35 +3,30 @@ package rest.controller.strem;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class StremFile {
-	
-	public static String stremFile(MultipartFile file) {
-    	String name = null;
-    	if (!file.isEmpty()) {
-			try {
+
+	private static String rootPath = "C:\\path\\";
+
+	public static File stremFile(MultipartFile file) throws IOException {
+		if (!file.isEmpty()) {
+			File dir = new File(rootPath + File.separator + "loadFiles");
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			String name = file.getOriginalFilename();
+			File uploadedFile = new File(dir.getAbsolutePath() + File.separator + name);
+			try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile))) {
 				byte[] bytes = file.getBytes();
-				name = file.getOriginalFilename();
-				String rootPath = "C:\\path\\";  
-				File dir = new File(rootPath + File.separator + "loadFiles");
-				if (!dir.exists()) {
-					dir.mkdirs();
-				}
-				File uploadedFile = new File(dir.getAbsolutePath() + File.separator + name);
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
 				stream.write(bytes);
 				stream.flush();
-				stream.close();
-				System.out.println(uploadedFile.getAbsolutePath());
-				return uploadedFile.getAbsolutePath();
- 
-			} catch (Exception e) {
-				return "Ошибка загрузки файла " + name + " => " + e.getMessage();
 			}
+			return uploadedFile;
 		} else {
-			return "error";
+			return null;
 		}
 	}
 }
