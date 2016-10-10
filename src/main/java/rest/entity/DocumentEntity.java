@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class DocumentEntity implements Serializable {
 
 	@Id
-    //@Column(name = "id")
+    @Column(name = "id")
 	@OneToMany
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

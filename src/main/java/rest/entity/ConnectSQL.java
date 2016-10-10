@@ -22,24 +22,24 @@ public class ConnectSQL {
 			Statement statement = null;
 			statement = conn.createStatement();
 			if (name1 != "") {
-				String query = "INSERT INTO documents (name, date_creation, author, comment, id) VALUES ('" + name1 + "','" + "12.05.2014" + "', '"
-					+ author + "','" + comment + "','" +"8" + "');";
+				String query = "INSERT INTO documents (name, date_creation, author, comment, id) VALUES ('" + name1 + "','" + new java.util.Date ().toString () + "', '"
+					+ author + "','" + comment + "','" +"9" + "');";
 				statement.executeUpdate(query);
 			}
-			int i = 15;
+			int i = 16;
 			System.out.println("string - " + string + "; string2 - " + string2 + "; string3 " + string3);
 			if (string != "error") {
-				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "8" + "', '"
+				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "9" + "', '"
 					+ "name" + "','" + string + "');";
 				statement.executeUpdate(query);
 			}
 			if (string2 != "error") {
-				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "8" + "', '"
+				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "9" + "', '"
 					+ "name" + "','" + string2 + "');";
 				statement.executeUpdate(query);
 			}
 			if (string3 != "error") {
-				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "8" + "', '"
+				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "9" + "', '"
 					+ "name" + "','" + string3 + "');";
 				statement.executeUpdate(query);
 			}

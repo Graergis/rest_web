@@ -30,9 +30,6 @@ import rest.entity.DocumentEntity;
 public class CustomerRestController {
 	
 	private static final int BUFFER_SIZE = 4096;
-	
-	@Autowired
-	MultipartConfigElement multipartConfigElement;
 
     @RequestMapping(value={"/","/welcome"}, method = RequestMethod.GET)
     public ModelAndView getHomePage() {
