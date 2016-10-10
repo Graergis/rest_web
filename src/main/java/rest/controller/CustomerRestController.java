@@ -1,49 +1,39 @@
 package rest.controller;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URLConnection;
-import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import rest.connect.ConnectSQL;
- 
+import rest.controller.strem.StremFile;
+import rest.entity.ConnectSQL;
+import rest.entity.DocumentEntity;
 
 @Controller
 public class CustomerRestController {
 	
+	private static final int BUFFER_SIZE = 4096;
+	
 	@Autowired
 	MultipartConfigElement multipartConfigElement;
-	
-	private static final String INTERNAL_FILE="test2.jpg";
-    private static final String EXTERNAL_FILE_PATH="E:/test.zip";
-     
- 
+
     @RequestMapping(value={"/","/welcome"}, method = RequestMethod.GET)
     public String getHomePage(ModelMap model) {
         return "welcome";
@@ -60,93 +50,51 @@ public class CustomerRestController {
     }
 
     @RequestMapping(value = "/loadFile", method = RequestMethod.POST)
-	//@ResponseBody
-	public String uploadFile(@RequestParam("file1") MultipartFile file) {
- 
-		String name = null;
- 
-		if (!file.isEmpty()) {
-			try {
-				byte[] bytes = file.getBytes();
- 
-				name = file.getOriginalFilename();
- 
-				String rootPath = "C:\\path\\";  
-				File dir = new File(rootPath + File.separator + "loadFiles");
- 
-				if (!dir.exists()) {
-					dir.mkdirs();
-				}
- 
-				File uploadedFile = new File(dir.getAbsolutePath() + File.separator + name);
- 
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-				stream.write(bytes);
-				stream.flush();
-				stream.close();
- 
- 
-				return "loadFile";
- 
-			} catch (Exception e) {
-				return "Ошибка загрузки файла " + name + " => " + e.getMessage();
-			}
+	public String uploadFile(@RequestParam("file1") MultipartFile fileOne, @RequestParam("file2") MultipartFile fileTwo, @RequestParam("file3") MultipartFile fileThree,
+			@RequestParam("name") String name,@RequestParam("author") String author,@RequestParam("comment") String comment) {
+		String pathFileOne = StremFile.stremFile(fileOne);
+		String pathFileTwo = StremFile.stremFile(fileTwo);
+		String pathFileTree = StremFile.stremFile(fileThree);
+		if (pathFileOne!="" || pathFileTwo!="" || pathFileTree!=""){
+			ConnectSQL connect = new ConnectSQL(pathFileOne, pathFileTwo, pathFileTree, name, author, comment);
+			return "loadFile";
 		} else {
 			return "error";
 		}
 	}
     
-    
-    @RequestMapping(value={"/load"}, method = RequestMethod.GET)
-    public String getLoad(ModelMap model) {
-        return "load";
-    }
-    
     @RequestMapping(value = "/download", method = RequestMethod.GET)
 	public ModelAndView client() {
-			List<String> list = ConnectSQL.getList();
-			ModelAndView model = new ModelAndView("download");
-			model.addObject("lists", list);
-			return model;
+		List<DocumentEntity> list = ConnectSQL.getList();
+		ModelAndView model = new ModelAndView("download");
+		model.addObject("lists", list);
+		return model;
 	}
-    
+
     @RequestMapping(value="/download/{type}", method = RequestMethod.GET)
-    public void downloadFile(HttpServletResponse response, @PathVariable("type") String type) throws IOException {
-     
-        File file = null;
-         
-        if(type.equalsIgnoreCase("internal")){
-            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            file = new File(classloader.getResource(INTERNAL_FILE).getFile());
-        }else{
-            file = new File(EXTERNAL_FILE_PATH);
-        }
-         
-        if(!file.exists()){
-            String errorMessage = "Файл, который вы ищете, не существует";
-            System.out.println(errorMessage);
-            OutputStream outputStream = response.getOutputStream();
-            outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
-            outputStream.close();
-            return;
-        }
-         
-        String mimeType= URLConnection.guessContentTypeFromName(file.getName());
-        if(mimeType==null){
-            System.out.println("mimetype is not detectable, will take default");
-            mimeType = "application/octet-stream";
-        }
-         
-        System.out.println("mimetype : "+mimeType);
-         
-        response.setContentType(mimeType);
-         
-        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() +"\""));
- 
-        response.setContentLength((int)file.length());
- 
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
- 
-        FileCopyUtils.copy(inputStream, response.getOutputStream());
+    public void downloadFile(HttpServletRequest request, HttpServletResponse response, @PathVariable("type") String type) throws IOException, SQLException {
+	    File file = null;
+	    String filePath = "";
+	    filePath = ConnectSQL.connec(type);
+	    file = new File(filePath);
+	    FileInputStream inputStream = new FileInputStream(file);
+	    ServletContext context = request.getServletContext();
+	    String mimeType = context.getMimeType(filePath);
+	    if (mimeType == null) {
+	        mimeType = "application/octet-stream";
+	    }
+	    response.setContentType(mimeType);
+	    response.setContentLength((int) file.length());
+	    String headerKey = "Content-Disposition";
+	    String headerValue = String.format("attachment; filename=\"%s\"", file.getName());
+	    response.setHeader(headerKey, headerValue);
+	    OutputStream outStream = response.getOutputStream();
+	    byte[] buffer = new byte[BUFFER_SIZE];
+	    int bytesRead = -1;
+	    while ((bytesRead = inputStream.read(buffer)) != -1) {
+	        outStream.write(buffer, 0, bytesRead);
+	    }
+	    inputStream.close();
+	    outStream.close();
     }
 }
