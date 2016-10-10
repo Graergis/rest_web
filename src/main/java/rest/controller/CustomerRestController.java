@@ -35,42 +35,33 @@ public class CustomerRestController {
 	MultipartConfigElement multipartConfigElement;
 
     @RequestMapping(value={"/","/welcome"}, method = RequestMethod.GET)
-    public String getHomePage(ModelMap model) {
-        return "welcome";
+    public ModelAndView getHomePage() {
+    	List<DocumentEntity> list = ConnectSQL.getList();
+		ModelAndView model = new ModelAndView("welcome");
+		model.addObject("lists", list);
+		return model;
     }
     
     @RequestMapping(value={"/error"}, method = RequestMethod.GET)
-    public String getError(ModelMap model) {
-        return "error";
-    }
-    
-    @RequestMapping(value={"/loadFile"}, method = RequestMethod.GET)
-    public String getLoadFile(ModelMap model) {
-        return "loadFile";
+    public ModelAndView getError() {
+    	ModelAndView model = new ModelAndView("error");
+        return model;
     }
 
-    @RequestMapping(value = "/loadFile", method = RequestMethod.POST)
-	public String uploadFile(@RequestParam("file1") MultipartFile fileOne, @RequestParam("file2") MultipartFile fileTwo, @RequestParam("file3") MultipartFile fileThree,
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+	public ModelAndView uploadFile(@RequestParam("file1") MultipartFile fileOne, @RequestParam("file2") MultipartFile fileTwo, @RequestParam("file3") MultipartFile fileThree,
 			@RequestParam("name") String name,@RequestParam("author") String author,@RequestParam("comment") String comment) {
 		String pathFileOne = StremFile.stremFile(fileOne);
 		String pathFileTwo = StremFile.stremFile(fileTwo);
 		String pathFileTree = StremFile.stremFile(fileThree);
-		if (pathFileOne!="" || pathFileTwo!="" || pathFileTree!=""){
+		if (pathFileOne!="error" || pathFileTwo!="error" || pathFileTree!="error"){
 			ConnectSQL connect = new ConnectSQL(pathFileOne, pathFileTwo, pathFileTree, name, author, comment);
-			return "loadFile";
+			return getHomePage();
 		} else {
-			return "error";
+			return getError();
 		}
 	}
     
-    @RequestMapping(value = "/download", method = RequestMethod.GET)
-	public ModelAndView client() {
-		List<DocumentEntity> list = ConnectSQL.getList();
-		ModelAndView model = new ModelAndView("download");
-		model.addObject("lists", list);
-		return model;
-	}
-
     @RequestMapping(value="/download/{type}", method = RequestMethod.GET)
     public void downloadFile(HttpServletRequest request, HttpServletResponse response, @PathVariable("type") String type) throws IOException, SQLException {
 	    File file = null;

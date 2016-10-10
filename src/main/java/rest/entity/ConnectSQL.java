@@ -23,22 +23,23 @@ public class ConnectSQL {
 			statement = conn.createStatement();
 			if (name1 != "") {
 				String query = "INSERT INTO documents (name, date_creation, author, comment, id) VALUES ('" + name1 + "','" + "12.05.2014" + "', '"
-					+ author + "','" + comment + "','" +"3" + "');";
+					+ author + "','" + comment + "','" +"8" + "');";
 				statement.executeUpdate(query);
 			}
-			int i = 5;
-			if (string != null) {
-				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "3" + "', '"
+			int i = 15;
+			System.out.println("string - " + string + "; string2 - " + string2 + "; string3 " + string3);
+			if (string != "error") {
+				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "8" + "', '"
 					+ "name" + "','" + string + "');";
 				statement.executeUpdate(query);
 			}
-			if (string2 != null) {
-				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "3" + "', '"
+			if (string2 != "error") {
+				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "8" + "', '"
 					+ "name" + "','" + string2 + "');";
 				statement.executeUpdate(query);
 			}
-			if (string3 != null) {
-				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "3" + "', '"
+			if (string3 != "error") {
+				String query = "INSERT INTO files (id, id_document, name, path) VALUES ('" + i++ + "','" + "8" + "', '"
 					+ "name" + "','" + string3 + "');";
 				statement.executeUpdate(query);
 			}
