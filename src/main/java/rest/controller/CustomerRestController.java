@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,8 +52,6 @@ public class CustomerRestController {
 			@RequestParam("file2") MultipartFile fileTwo, @RequestParam("file3") MultipartFile fileThree,
 			@RequestParam("name") String name, @RequestParam("author") String author,
 			@RequestParam("comment") String comment) throws IOException {
-		HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "text/html; charset=utf-8");
 		if (fileOne.getOriginalFilename()!=""){
 			File pathFileOne = StremFile.stremFile(fileOne);
 			Document document = new Document(name, new Date(), author, comment);
