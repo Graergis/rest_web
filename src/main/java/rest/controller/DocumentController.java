@@ -38,7 +38,7 @@ public class DocumentController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String uploadFile(@RequestParam("file") MultipartFile[] files, @RequestParam("name") String name,
+	public String saveDocument(@RequestParam("file") MultipartFile[] files, @RequestParam("name") String name,
 			@RequestParam("author") String author, @RequestParam("comment") String comment) throws IOException {
 		Document document = new Document(name, new Date(), author, comment);
 		document = documentService.addDocument(document);
