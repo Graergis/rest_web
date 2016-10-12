@@ -42,25 +42,21 @@ public class DocumentController {
 			@RequestParam("file2") MultipartFile fileTwo, @RequestParam("file3") MultipartFile fileThree,
 			@RequestParam("name") String name, @RequestParam("author") String author,
 			@RequestParam("comment") String comment) throws IOException {
+		Document document = new Document(name, new Date(), author, comment);
+		document = documentService.addDocument(document);
 		if (fileOne.getOriginalFilename()!=""){
 			File pathFileOne = StremFile.stremFile(fileOne);
-			Document document = new Document(name, new Date(), author, comment);
-			document = documentService.addDocument(document);
 			rest.entity.File file1 = new rest.entity.File(pathFileOne.getName(), pathFileOne.getAbsolutePath(),
 					document);
 			fileService.addFile(file1);
 		}
 		if(fileTwo.getOriginalFilename()!=""){
-			Document document = new Document(name, new Date(), author, comment);
-			document = documentService.addDocument(document);
 			File pathFileTwo = StremFile.stremFile(fileTwo);
 			rest.entity.File file2 = new rest.entity.File(pathFileTwo.getName(), pathFileTwo.getAbsolutePath(),
 					document);
 			fileService.addFile(file2);
 		}
 		if(fileThree.getOriginalFilename()!=""){
-			Document document = new Document(name, new Date(), author, comment);
-			document = documentService.addDocument(document);
 			File pathFileTree = StremFile.stremFile(fileThree);
 			rest.entity.File file3 = new rest.entity.File(pathFileTree.getName(), pathFileTree.getAbsolutePath(),
 					document);
