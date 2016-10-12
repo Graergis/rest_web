@@ -14,13 +14,13 @@ public class DocumentService {
 	@Autowired
 	private DocumentRepository documentRepository;
 
-	public Document addDocument(Document document) {
+	public Document save(Document document) {
 		Document saveDocument = documentRepository.save(document);
 
 		return saveDocument;
 	}
 
-	public List<Document> getAll() {
+	public List<Document> findAll() {
 		return documentRepository.findAll();
 	}
 }

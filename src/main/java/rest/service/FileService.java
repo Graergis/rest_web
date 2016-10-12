@@ -14,18 +14,17 @@ public class FileService {
 	@Autowired
 	private FileRepository fileRepository;
 
-	public File addFile(File file) {
+	public File save(File file) {
 		File saveFile = fileRepository.save(file);
 
 		return saveFile;
 	}
 
-	public List<File> getAll() {
+	public List<File> findAll() {
 		return fileRepository.findAll();
 	}
 
 	public File findOne(Long type) {
 		return fileRepository.findOne(type);
 	}
-
 }
