@@ -38,30 +38,18 @@ public class DocumentController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ModelAndView uploadFile(@RequestParam("file1") MultipartFile fileOne,
-			@RequestParam("file2") MultipartFile fileTwo, @RequestParam("file3") MultipartFile fileThree,
-			@RequestParam("name") String name, @RequestParam("author") String author,
-			@RequestParam("comment") String comment) throws IOException {
-		Document document = new Document(name, new Date(), author, comment);
-		document = documentService.addDocument(document);
-		if (fileOne.getOriginalFilename()!=""){
-			File pathFileOne = StremFile.stremFile(fileOne);
-			rest.entity.File file1 = new rest.entity.File(pathFileOne.getName(), pathFileOne.getAbsolutePath(),
-					document);
-			fileService.addFile(file1);
-		}
-		if(fileTwo.getOriginalFilename()!=""){
-			File pathFileTwo = StremFile.stremFile(fileTwo);
-			rest.entity.File file2 = new rest.entity.File(pathFileTwo.getName(), pathFileTwo.getAbsolutePath(),
-					document);
-			fileService.addFile(file2);
-		}
-		if(fileThree.getOriginalFilename()!=""){
-			File pathFileTree = StremFile.stremFile(fileThree);
-			rest.entity.File file3 = new rest.entity.File(pathFileTree.getName(), pathFileTree.getAbsolutePath(),
-					document);
-			fileService.addFile(file3);
-		}
-		return getHomePage();
-	}
+	 public String uploadFile(@RequestParam("file") MultipartFile[] files,  
+	   @RequestParam("name") String name, @RequestParam("author") String author,
+	   @RequestParam("comment") String comment) throws IOException {
+	  Document document = new Document(name, new Date(), author, comment);
+	  document = documentService.addDocument(document);
+	  for (MultipartFile file : files) {
+	   File savedFile = StremFile.stremFile(file);
+	   if (savedFile != null) {
+	    rest.entity.File file1 = new rest.entity.File(savedFile.getName(), savedFile.getAbsolutePath(), document);
+	    fileService.addFile(file1);
+	   }
+	  }
+	  return "redirect:/";
+	 }
 }

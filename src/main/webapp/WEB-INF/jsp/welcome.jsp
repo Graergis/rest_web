@@ -124,13 +124,13 @@ th:hover {
 				Автор<br> <input type="text" name="author" value="" size="10" required>
 			</p>
 			<p>
-				<input type="file" id="file1" name="file1" required/>
+				<input type="file"  name="file" required/>
 			</p>
 			<p>
-				<input type="file" id="file2" name="file2"/>
+				<input type="file" name="file"/>
 			</p>
 			<p>
-				<input type="file" id="file3" name="file3"/>
+				<input type="file" name="file"/>
 			</p>
 			<p>
 				Комментарий<br> <input type="text" name="comment" value=""
