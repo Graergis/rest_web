@@ -27,7 +27,7 @@ public class FileController {
 
 	@Autowired
 	private FileService fileService;
-	
+
 	@RequestMapping(value = "/download/{id}", method = RequestMethod.GET)
 	public void downloadFile(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") Long fileId)
 			throws IOException, SQLException {
