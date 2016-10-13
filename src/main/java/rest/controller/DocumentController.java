@@ -17,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import rest.controller.util.FileUtils;
 import rest.entity.Document;
+import rest.entity.User;
 import rest.service.DocumentService;
 import rest.service.FileService;
+import rest.service.UserService;
 
 @Controller
 @Transactional
@@ -29,6 +31,9 @@ public class DocumentController {
 
 	@Autowired
 	private FileService fileService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Value("${path}")
 	private String rootPath;
@@ -44,8 +49,10 @@ public class DocumentController {
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public String saveDocument(@RequestParam("file") MultipartFile[] files, @RequestParam("name") String name,
 			@RequestParam("author") String author, @RequestParam("comment") String comment) throws IOException {
-		Document document = new Document(name, new Date(), author, comment);
+		Document document = new Document(name, new Date(), comment);
 		document = documentService.save(document);
+		User user = new User(author, "private", document);
+		user = userService.save(user);
 		for (MultipartFile file : files) {
 			File savedFile = FileUtils.saveToDisc(rootPath, file);
 			if (savedFile != null) {

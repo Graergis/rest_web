@@ -28,6 +28,12 @@ th:hover {
 	<div class="form-container">
 		<h1>Welcome to FileDownloader Example</h1>
 		<p>
+			<a href="#" id="go2" class="button24">Авторизация</a>
+		</p>
+		<p>
+			<a href="<c:url value='/login' />" class="button24">-></a>
+		</p>
+		<p>
 			<a href="#" id="go" class="button24">Загрузить файл</a>
 		</p>
 		<div style="width: 2000px; height: 600px; overflow: auto;">
@@ -145,6 +151,29 @@ th:hover {
 			</p>
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
+		</form>
+	</div>
+	<div id="modal_form2" style="display: none; top: 45%; opacity: 0;">
+		<span id="modal_close2">X</span>
+		<form action="<c:url value='/login' />" method='post'>
+			<h3>Песрональные данные</h3>
+			<p>Пользователь<br>
+				<p>
+					<input type="text" name="login" value="" size="10">
+				</p>
+				<p>Пароль<br>
+					<input type="password" name="password" value="" size="10">
+				</p>
+				<p style="text-align: center; padding-bottom: 10px">
+					<table>
+						<tr>
+						<th><small>
+							<input type="submit" value="Авторизация">
+						</small>
+					</table>
+				</p>
+				<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" />
 		</form>
 	</div>
 	<div id="overlay"></div>
