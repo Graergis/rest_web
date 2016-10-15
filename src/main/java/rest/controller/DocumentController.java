@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import rest.controller.util.FileUtils;
 import rest.entity.Document;
-import rest.entity.User;
 import rest.service.DocumentService;
 import rest.service.FileService;
-import rest.service.UserService;
 
 @Controller
 @Transactional
@@ -31,9 +31,6 @@ public class DocumentController {
 
 	@Autowired
 	private FileService fileService;
-	
-	@Autowired
-	private UserService userService;
 	
 	@Value("${path}")
 	private String rootPath;
@@ -49,10 +46,11 @@ public class DocumentController {
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public String saveDocument(@RequestParam("file") MultipartFile[] files, @RequestParam("name") String name,
 			@RequestParam("author") String author, @RequestParam("comment") String comment) throws IOException {
-		Document document = new Document(name, new Date(), comment);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(auth);
+		
+		Document document = new Document(name, new Date(), author, comment);
 		document = documentService.save(document);
-		User user = new User(author, "private", document);
-		user = userService.save(user);
 		for (MultipartFile file : files) {
 			File savedFile = FileUtils.saveToDisc(rootPath, file);
 			if (savedFile != null) {

@@ -25,8 +25,8 @@ public class Document {
 	@Column(name = "date_creation")
 	private Date date;
 
-	//@Column(name = "author")
-	//private String author;
+	@Column(name = "author")
+	private String author;
 
 	@Column(name = "comment")
 	private String comment;
@@ -34,27 +34,15 @@ public class Document {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "document")
 	private List<File> files;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-	private List<User> users;
-
 	public Document() {
 
 	}
 
-	public Document(String name, Date date, String comment) {
+	public Document(String name, Date date, String author, String comment) {
 		this.name = name;
 		this.date = date;
-		//this.author = author;
+		this.author = author;
 		this.comment = comment;
-	}
-
-	
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
 	}
 
 	public List<File> getFiles() {
@@ -89,13 +77,13 @@ public class Document {
 		this.date = date;
 	}
 
-	/*public String getAuthor() {
+	public String getAuthor() {
 		return author;
 	}
 
 	public void setAuthor(String author) {
 		this.author = author;
-	}*/
+	}
 
 	public String getComment() {
 		return comment;

@@ -84,6 +84,32 @@ a.button24:active {
 	cursor: pointer;
 	display: block;
 }
+#modal_form3 {
+	width: 320px;
+	height: 350px; /* Размеры должны быть фиксированы */
+	border-radius: 5px;
+	border: 3px #000 solid;
+	background: #fff;
+	position: fixed; /* чтобы окно было в видимой зоне в любом месте */
+	top: 45%; /* отступаем сверху 45%, остальные 5% подвинет скрипт */
+	left: 50%; /* половина экрана слева */
+	margin-top: -150px;
+	margin-left: -150px;
+	display: none; /* в обычном состоянии окна не должно быть */
+	opacity: 0; /* полностью прозрачно для анимирования */
+	z-index: 5; /* окно должно быть наиболее большем слое */
+	padding: 20px 10px;
+}
+
+#modal_form3 #modal_close3 {
+	width: 21px;
+	height: 21px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	display: block;
+}
 /* Подложка */
 #overlay {
 	z-index: 3;
@@ -96,5 +122,36 @@ a.button24:active {
 	top: 0;
 	left: 0; /* сверху и слева 0, обязательные свойства! */
 	cursor: pointer;
-	display: none; /* в обычном состоянии её нет) */
+	display: none; /* в обычном состоянии её нет */
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+nav {
+  position: relative;
+}
+.dropdown-toggle {
+  padding: .5em 1em;
+  background: #777;
+  border-radius: .2em .2em 0 0;
+}
+ul.dropdown {
+  display:none;
+  position: absolute;
+  top: 100%;
+  margin-top: .8em;
+  background: #777;
+  min-width: 6em;
+  padding: 0;
+  border-radius: 0 0 .2em .2em;
+    li {
+      list-style-type: none;
+      a {
+        text-decoration: none;
+        padding: .5em 1em;
+        display: block;
+      }
+   }
 }
