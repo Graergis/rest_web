@@ -33,7 +33,7 @@ public class Document {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "document")
 	private List<File> files;
-	
+
 	public Document() {
 
 	}

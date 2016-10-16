@@ -31,23 +31,24 @@ public class DocumentController {
 
 	@Autowired
 	private FileService fileService;
-	
+
 	@Value("${path}")
 	private String rootPath;
 
 	@RequestMapping(value = { "/", "/search" }, method = RequestMethod.GET)
-	public ModelAndView getHomePage(@RequestParam(value = "comment", required = false) String comment, 
+	public ModelAndView getHomePage(@RequestParam(value = "comment", required = false) String comment,
 			@RequestParam(value = "author", required = false) String author,
 			@RequestParam(value = "name", required = false) String name) {
-		List<Document> list = documentService.findByNameContainingAndCommentContainingAndAuthorContaining(name,
-				comment, author);
+		List<Document> list = documentService.findByNameContainingAndCommentContainingAndAuthorContaining(name, comment,
+				author);
 		ModelAndView model = new ModelAndView("welcome");
 		model.addObject("lists", list);
 		return model;
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String saveDocument(@RequestParam("file") MultipartFile[] files, @RequestParam("name") String name, @RequestParam("comment") String comment) throws IOException {
+	public String saveDocument(@RequestParam("file") MultipartFile[] files, @RequestParam("name") String name,
+			@RequestParam("comment") String comment) throws IOException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Document document = new Document(name, new Date(), auth.getName(), comment);
 		document = documentService.save(document);

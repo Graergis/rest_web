@@ -3,10 +3,10 @@ body {
 	padding: 0;
 	min-height: 100%;
 	background: #000000 url('oblako2.jpg') fixed top left no-repeat;
-	-o-background-size: 100% 100%; 
-	-webkit-background-size: 100% 100%; 
-	-moz-background-size: 100% 100%; 
-	-khtml-background-size: 100% 100%; 
+	-o-background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-khtml-background-size: 100% 100%;
 	background-size: 100% 100%;
 }
 
@@ -58,6 +58,7 @@ a.button24:active {
 	cursor: pointer;
 	display: block;
 }
+
 #modal_form2 {
 	width: 320px;
 	height: 350px; /* Размеры должны быть фиксированы */
@@ -84,6 +85,7 @@ a.button24:active {
 	cursor: pointer;
 	display: block;
 }
+
 #modal_form3 {
 	width: 320px;
 	height: 350px; /* Размеры должны быть фиксированы */
@@ -126,32 +128,32 @@ a.button24:active {
 }
 
 a {
-  text-decoration: none;
-  color: #fff;
+	text-decoration: none;
+	color: #fff;
 }
+
 nav {
-  position: relative;
+	position: relative;
 }
+
 .dropdown-toggle {
-  padding: .5em 1em;
-  background: #777;
-  border-radius: .2em .2em 0 0;
+	padding: .5em 1em;
+	background: #777;
+	border-radius: .2em .2em 0 0;
 }
+
 ul.dropdown {
-  display:none;
-  position: absolute;
-  top: 100%;
-  margin-top: .8em;
-  background: #777;
-  min-width: 6em;
-  padding: 0;
-  border-radius: 0 0 .2em .2em;
-    li {
-      list-style-type: none;
-      a {
-        text-decoration: none;
-        padding: .5em 1em;
-        display: block;
-      }
-   }
+	display: none;
+	position: absolute;
+	top: 100%;
+	margin-top: .8em;
+	background: #777;
+	min-width: 6em;
+	padding: 0;
+	border-radius: 0 0 .2em .2em; li { list-style-type : none; a {
+	text-decoration : none;
+	padding: .5em 1em;
+	display: block;
+}
+}
 }

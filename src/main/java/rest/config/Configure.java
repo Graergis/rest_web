@@ -34,7 +34,7 @@ public class Configure extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 	}
-	
+
 	@Bean
 	public MultipartResolver multipartResolver() {
 		return new CommonsMultipartResolver();

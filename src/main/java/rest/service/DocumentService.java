@@ -26,9 +26,9 @@ public class DocumentService {
 
 	public List<Document> findByNameContainingAndCommentContainingAndAuthorContaining(String name, String comment,
 			String author) {
-		name = name!=null?name:"";
-		comment = comment!=null?comment:"";
-		author = author!=null?author:"";
+		name = name != null ? name : "";
+		comment = comment != null ? comment : "";
+		author = author != null ? author : "";
 		return documentRepository.findByNameContainingAndCommentContainingAndAuthorContaining(name, comment, author);
 	}
 }
