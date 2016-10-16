@@ -38,14 +38,16 @@ th:hover {
 		</sec:authorize>
 	</div>	
 	<h1 align="center">Welcome to FileDownloader Example</h1>
-	<p><a href="#" id="go2" class="button24">Войти</a></p>
+	<sec:authorize access="!isAuthenticated()">
+		<p><a href="#" id="go2" class="button24">Войти</a></p>
+	</sec:authorize>
 	<div class="form-container">
 		<sec:authorize access="hasRole('USER')">
 			<p>
 				<a href="#" id="go" class="button24">Создать документ</a>
 			</p>
 			<p>
-				<a href="#" id="go3" class="button24">Посик</a>
+				<a href="#" id="go3" class="button24">Поиск</a>
 			</p>
 		</sec:authorize>
 		<div style="width: 2000px; height: 600px; overflow: auto;">
@@ -143,9 +145,6 @@ th:hover {
 				Название документа<br> <input type="text" name="name" value=""
 					size="15" required>
 			</p>
-			<sec:authorize access="isAuthenticated()">
-				<input type="hidden" name="author" value="<sec:authentication property="principal.username" />">
-			</sec:authorize>
 			<p>
 				<input type="file" name="file" required />
 			</p>
@@ -192,7 +191,7 @@ th:hover {
 	</div>
 	<div id="modal_form3" style="display: none; opacity: 0;">
 		<span id="modal_close3">X</span>
-		<form action="<c:url value='/search' />" method='post'>
+		<form action="<c:url value='/search' />" method='get'>
 			<h3>Данные поиска</h3>
 			Искать..
 			<p>
@@ -210,8 +209,7 @@ th:hover {
 			<p style="text-align: center; padding-bottom: 10px">
 				<input type="submit" value="Поиск" />
 			</p>
-			<input type="hidden" name="Submit" value="login" /> <input
-				type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 	</div>
 	<div id="overlay"></div>

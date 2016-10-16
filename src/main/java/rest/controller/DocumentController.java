@@ -35,21 +35,21 @@ public class DocumentController {
 	@Value("${path}")
 	private String rootPath;
 
-	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
-	public ModelAndView getHomePage() {
-		List<Document> list = documentService.findAll();
+	@RequestMapping(value = { "/", "/search" }, method = RequestMethod.GET)
+	public ModelAndView getHomePage(@RequestParam(value = "comment", required = false) String comment, 
+			@RequestParam(value = "author", required = false) String author,
+			@RequestParam(value = "name", required = false) String name) {
+		List<Document> list = documentService.findByNameContainingAndCommentContainingAndAuthorContaining(name,
+				comment, author);
 		ModelAndView model = new ModelAndView("welcome");
 		model.addObject("lists", list);
 		return model;
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public String saveDocument(@RequestParam("file") MultipartFile[] files, @RequestParam("name") String name,
-			@RequestParam("author") String author, @RequestParam("comment") String comment) throws IOException {
+	public String saveDocument(@RequestParam("file") MultipartFile[] files, @RequestParam("name") String name, @RequestParam("comment") String comment) throws IOException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(auth);
-		
-		Document document = new Document(name, new Date(), author, comment);
+		Document document = new Document(name, new Date(), auth.getName(), comment);
 		document = documentService.save(document);
 		for (MultipartFile file : files) {
 			File savedFile = FileUtils.saveToDisc(rootPath, file);
