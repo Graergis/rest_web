@@ -21,25 +21,28 @@ th:hover {
 <script src="static/js/jquery-3.0.0.min.js" type="text/javascript"></script>
 <script src="static/js/popup.js" type="text/javascript"></script>
 <script type="text/javascript">
-			function openFileDialog(id) {
-				document.getElementById(id).click();
-			}
+	function openFileDialog(id) {
+		document.getElementById(id).click();
+	}
 </script>
 </head>
 <body onload="digitalWatch()">
-	<div >
+	<div>
 		<sec:authorize access="isAuthenticated()">
 			<nav>
-				<a class="dropdown-toggle" href="#" title="Menu"><sec:authentication property="principal.username" /></a>
+				<a class="dropdown-toggle" href="#" title="Menu"><sec:authentication
+						property="principal.username" /></a>
 				<ul class="dropdown">
-				  <li style="width:50px"><a href="<c:url value='/logout'/> ">Выйти</a></li>
+					<li style="width: 50px"><a href="<c:url value='/logout'/> ">Выйти</a></li>
 				</ul>
 			</nav>
 		</sec:authorize>
-	</div>	
+	</div>
 	<h1 align="center">Welcome to FileDownloader Example</h1>
 	<sec:authorize access="!isAuthenticated()">
-		<p><a href="#" id="go2" class="button24">Войти</a></p>
+		<p>
+			<a href="#" id="go2" class="button24">Войти</a>
+		</p>
 	</sec:authorize>
 	<div class="form-container">
 		<sec:authorize access="hasRole('USER')">
@@ -73,7 +76,9 @@ th:hover {
 								<ul>
 									<c:forEach var="file" items="${item.files}">
 										<li><sec:authorize access="isAuthenticated()">
-												<a href="<c:url value='/download/${file.id}'/>">${file.name}</a>
+												<span title=${file.name}> <a
+													href="<c:url value='/download/${file.id}'/>"><img
+														src="static/css/load.jpg" border="0"></a></span>
 											</sec:authorize> <sec:authorize access="!isAuthenticated()">
 												${file.name}
 											</sec:authorize></li>
@@ -85,61 +90,67 @@ th:hover {
 				</tbody>
 			</table>
 			<script>
-			    var grid = document.getElementById('grid');
-			
-			    grid.onclick = function(e) {
-			      if (e.target.tagName != 'TH') return;
-			      sortGrid(e.target.cellIndex, e.target.getAttribute('data-type'));
-			    };
-			
-			    function sortGrid(colNum, type) {
-			      var tbody = grid.getElementsByTagName('tbody')[0];
-			      var rowsArray = [].slice.call(tbody.rows);
-			      var compare;
-			
-			      switch (type) {
-			      case 'id':
-			        compare = function(rowA, rowB) {
-			          return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
-			        };
-			        break;
-			      case 'name':
-			        compare = function(rowA, rowB) {
-			          return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1 : -1;
-			        };
-			        break;
-			      case 'date':
-			          compare = function(rowA, rowB) {
-			            return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1 : -1;
-			          };
-			          break;
-			      case 'author':
-			          compare = function(rowA, rowB) {
-			            return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1 : -1;
-			          };
-			          break;
-			      case 'comment':
-			          compare = function(rowA, rowB) {
-			            return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1 : -1;
-			          };
-			          break;
-			      }
-			      rowsArray.sort(compare);
-			      grid.removeChild(tbody);
-			      for (var i = 0; i < rowsArray.length; i++) {
-			        tbody.appendChild(rowsArray[i]);
-			      }
-			      grid.appendChild(tbody);
-			
-			    }
-  			</script>
+				var grid = document.getElementById('grid');
+
+				grid.onclick = function(e) {
+					if (e.target.tagName != 'TH')
+						return;
+					sortGrid(e.target.cellIndex, e.target
+							.getAttribute('data-type'));
+				};
+
+				function sortGrid(colNum, type) {
+					var tbody = grid.getElementsByTagName('tbody')[0];
+					var rowsArray = [].slice.call(tbody.rows);
+					var compare;
+
+					switch (type) {
+					case 'id':
+						compare = function(rowA, rowB) {
+							return rowA.cells[colNum].innerHTML
+									- rowB.cells[colNum].innerHTML;
+						};
+						break;
+					case 'name':
+						compare = function(rowA, rowB) {
+							return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1
+									: -1;
+						};
+						break;
+					case 'date':
+						compare = function(rowA, rowB) {
+							return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1
+									: -1;
+						};
+						break;
+					case 'author':
+						compare = function(rowA, rowB) {
+							return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1
+									: -1;
+						};
+						break;
+					case 'comment':
+						compare = function(rowA, rowB) {
+							return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1
+									: -1;
+						};
+						break;
+					}
+					rowsArray.sort(compare);
+					grid.removeChild(tbody);
+					for (var i = 0; i < rowsArray.length; i++) {
+						tbody.appendChild(rowsArray[i]);
+					}
+					grid.appendChild(tbody);
+
+				}
+			</script>
 		</div>
 	</div>
 	<div id="modal_form" style="display: none; top: 45%; opacity: 0;">
 		<span id="modal_close">X</span>
-		<form enctype="multipart/form-data"
-			action="<c:url value = '/' />" method="post"
-			id="othdetphotoform">
+		<form enctype="multipart/form-data" action="<c:url value = '/' />"
+			method="post" id="othdetphotoform">
 			<h3>Данные загрузки</h3>
 			<p>
 				Название документа<br> <input type="text" name="name" value=""
@@ -195,12 +206,10 @@ th:hover {
 			<h3>Данные поиска</h3>
 			Искать..
 			<p>
-				документ<br> <input type="text" name="name" value=""
-					size="10">
+				документ<br> <input type="text" name="name" value="" size="10">
 			</p>
 			<p>
-				автор<br> <input type="text" name="author" value=""
-					size="10">
+				автор<br> <input type="text" name="author" value="" size="10">
 			</p>
 			<p>
 				комментарий<br> <input type="text" name="comment" value=""
@@ -209,7 +218,8 @@ th:hover {
 			<p style="text-align: center; padding-bottom: 10px">
 				<input type="submit" value="Поиск" />
 			</p>
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
 		</form>
 	</div>
 	<div id="overlay"></div>
